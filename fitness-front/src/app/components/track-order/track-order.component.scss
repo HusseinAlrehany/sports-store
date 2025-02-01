@@ -1,0 +1,132 @@
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+  
+    .search-input {
+      width: 100%;
+      
+      mat-form-field {
+        width: 100%;
+  
+        input {
+          padding: 12px;
+          font-size: 16px;
+        }
+  
+        button {
+          cursor: pointer;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+  
+          &:hover {
+            transform: scale(1.1);
+          }
+  
+          &:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+          }
+  
+          mat-icon {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+  
+  // Responsive Design
+  @media (max-width: 600px) {
+    .search-form {
+      flex-direction: column;
+      padding: 15px;
+      width: 90%;
+  
+      .search-input {
+        mat-form-field {
+          input {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+//order details 
+  .order-details-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+  
+    mat-card {
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      }
+  
+      mat-card-header {
+        background-color: #3f51b5;
+        color: white;
+        border-radius: 8px 8px 0 0;
+        padding: 12px;
+        text-align: center;
+        
+        mat-card-title {
+          font-size: 20px;
+          font-weight: bold;
+        }
+      }
+  
+      .order-details {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        font-size: 16px;
+        color: #333;
+  
+        strong {
+          color: #3f51b5;
+        }
+  
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+  
+  // Responsive Design
+  @media (max-width: 600px) {
+    .order-details-container {
+      padding: 10px;
+  
+      mat-card {
+        max-width: 100%;
+        padding: 15px;
+      }
+      
+      .order-details {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+  }
+  
+  

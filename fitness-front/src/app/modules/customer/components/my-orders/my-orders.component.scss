@@ -1,0 +1,95 @@
+.mat-table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  
+    // Header styling
+    .mat-header-cell {
+      background-color: #003973; // dark blue background for headers
+      color: #ffffff; // white text
+      font-weight: bold;
+      text-align: left;
+      padding: 16px;
+      font-size: 14px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+  
+    // Row styling
+    .mat-row {
+      font-size: 14px;
+      color: #333;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e0e0e0;
+  
+      &:hover {
+        background-color: #f1f5fc; // light blue on hover
+      }
+    }
+  
+    // Cell styling
+    .mat-cell {
+      padding: 16px;
+      text-align: left;
+      font-weight: 500;
+  
+      &:last-child {
+        text-align: center; // Center align the "Action" column
+      }
+    }
+  
+    // Special styling for status cells
+    .mat-cell:nth-child(6) {
+      font-weight: bold;
+  
+      &.status-completed {
+        color: #4caf50; // Green for completed
+      }
+  
+      &.status-pending {
+        color: #ff9800; // Orange for pending
+      }
+  
+      &.status-cancelled {
+        color: #f44336; // Red for cancelled
+      }
+    }
+  
+    // Action buttons in the last column
+    .mat-cell:last-child {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  
+      button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #003973;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: #002c61;
+        }
+      }
+    }
+  
+    // Responsive design
+    @media (max-width: 768px) {
+      .mat-header-cell,
+      .mat-cell {
+        padding: 8px;
+        font-size: 12px;
+      }
+  
+      .mat-row:hover {
+        background-color: #ffffff; // Remove hover effect on small screens
+      }
+    }
+  }
+  

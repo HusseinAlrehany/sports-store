@@ -1,0 +1,35 @@
+<mat-card class="profile-card">
+    <mat-card-title>User Profile</mat-card-title>
+    <mat-card-content>
+      <div class="profile-image">
+        <img *ngIf="imagePreview" [src]="imagePreview" alt="Profile Image" class="profile-pic"/>
+        <img *ngIf="existingImage && !imagePreview" [src]="existingImage" alt="Profile Image" class="profile-pic"/>
+        <input type="file" (change)="onFileSelected($event)" hidden #fileInput>
+        <button mat-mini-fab color="primary" (click)="fileInput.click()">
+          <mat-icon>photo_camera</mat-icon>
+        </button>
+      </div>
+      <form [formGroup]="userProfileForm" (ngSubmit)="updateProfile()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email">
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password">
+        </mat-form-field>
+        
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!userProfileForm.valid">Update</button>
+          <button mat-raised-button color="warn" type="button" (click)="router.navigateByUrl('/customer/dashboard')">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

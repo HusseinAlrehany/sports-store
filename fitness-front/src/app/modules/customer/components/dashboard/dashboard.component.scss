@@ -1,0 +1,138 @@
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: #f8f8f8;
+    min-height: 70vh;
+    padding: 20px;
+  
+    .product-card {
+      width: calc(33.33% - 20px);
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  
+      .product-image {
+        height: 200px;
+        border-radius: 10px 10px 0 0;
+        overflow: hidden;
+  
+        /* Style for the clickable image button */
+        .clickable-image {
+          display: block; // Ensure the button behaves like a block element
+          width: 100%; // Take up the full width of the container
+          height: 100%; // Take up the full height of the container
+          padding: 0; // Remove default button padding
+          border: none; // Remove default button border
+          background: none; // Remove default button background
+          cursor: pointer; // Show pointer cursor on hover
+          position: relative; // For positioning the icon
+  
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; // Maintain aspect ratio and cover the container
+            transition: opacity 0.3s ease; // Smooth transition for hover effect
+          }
+  
+          /* Icon styling */
+          .clickable-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0; // Hidden by default
+            color: white;
+            font-size: 24px;
+            transition: opacity 0.3s ease; // Smooth transition for hover effect
+          }
+  
+          /* Hover effect */
+          &:hover img {
+            opacity: 0.7; // Reduce image opacity on hover
+          }
+  
+          &:hover .clickable-icon {
+            opacity: 1; // Show icon on hover
+          }
+        }
+      }
+  
+      .product-details {
+        padding: 20px;
+  
+        .product-name {
+          font-size: 20px;
+          font-weight: bold;
+          color: #108ee9;
+          margin-bottom: 10px;
+        }
+  
+        .product-description {
+          margin-bottom: 10px;
+        }
+  
+        .product-info {
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: 10px;
+  
+          .info-row {
+            flex: 0 0 50%;
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+  
+            .info-label {
+              font-weight: 10px;
+              margin-right: 5px;
+            }
+  
+            .info-value {
+              font-weight: bold;
+            }
+          }
+        }
+  
+        .actions {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 10px;
+  
+          .update-button {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+  
+  .empty-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+  
+    span {
+      font-size: 18px;
+      color: #616161;
+      margin-top: 10px;
+    }
+  }
+  
+  .search-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  
+    .search-input {
+      width: 300px;
+      margin-right: 15px;
+  
+      input {
+        padding-right: 40px;
+      }
+    }
+  }

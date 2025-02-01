@@ -1,0 +1,51 @@
+<form [formGroup]="seacrhOrderForm" class="search-form" (submit)="submitForm()">
+
+        <mat-form-field appearance="outline" class="search-input">
+            <mat-label> Enter Tracking Id </mat-label>
+            <input matInput formControlName="trackingId">
+            <button mat-button matSuffix color="primary" [disabled]="seacrhOrderForm.invalid">
+                 <mat-icon>search </mat-icon>
+            </button>
+        </mat-form-field>
+
+</form>
+
+
+<!--order details-->
+<div class="order-details-container" *ngIf="order">
+    <mat-card >
+        <mat-card-header>
+            <mat-card-title>Order Details</mat-card-title>
+        </mat-card-header>
+
+        <div class="order-details">
+            Tracking ID:
+            <strong> {{order.trackingId}}</strong>
+        </div>
+        <div class="order-details">
+            User Name:
+            <strong> {{order.userName}}</strong>
+        </div>
+        <div class="order-details">
+            Address:
+            <strong> {{order.address}}</strong>
+        </div>
+        <div class="order-details">
+            TotalAmount:
+            <strong> {{order.totalAmount | currency}}</strong>
+        </div>
+
+        <div class="order-details">
+            Status:
+            <strong> {{order.orderStatus}}</strong>
+        </div>
+
+        <div class="order-details">
+            Date:
+            <strong> {{order.date | date}}</strong>
+        </div>
+
+    
+    </mat-card>
+
+</div>

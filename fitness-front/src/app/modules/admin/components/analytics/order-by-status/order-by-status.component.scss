@@ -1,0 +1,86 @@
+.order-status-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+    background-color: #f4f6f9;
+  }
+  
+  // Order Status Card Styles
+  .order-status-card {
+    width: 220px;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+  
+    mat-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 12px;
+  
+      mat-card-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+    }
+  
+    // Circular Status Avatar
+    .status-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      margin-right: 10px;
+    }
+  
+    // Dynamic Colors for Each Status
+    &:nth-child(1) .status-avatar {
+      background-color: #ff9800; // Orange for Placed
+    }
+  
+    &:nth-child(2) .status-avatar {
+      background-color: #2196f3; // Blue for Shipped
+    }
+  
+    &:nth-child(3) .status-avatar {
+      background-color: #4caf50; // Green for Delivered
+    }
+  
+    // Status Value Styling
+    .status-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #3f51b5;
+      padding: 10px 0;
+    }
+  }
+  
+  // Responsive Design
+  @media (max-width: 768px) {
+    .order-status-container {
+      gap: 10px;
+      padding: 10px;
+    }
+  
+    .order-status-card {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+  

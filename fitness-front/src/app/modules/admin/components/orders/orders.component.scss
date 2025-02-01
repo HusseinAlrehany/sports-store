@@ -1,0 +1,119 @@
+.container {
+    margin: 20px auto;
+    padding: 16px;
+    max-width: 1200px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  mat-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+    mat-card-content {
+      padding: 16px;
+  
+      // Table Styling
+      .mat-elevation-z8 {
+        width: 100%;
+        table-layout: fixed; // Ensures consistent column width
+        border-collapse: collapse;
+        border-spacing: 0;
+        background-color: #ffffff;
+        overflow: hidden;
+  
+        // Header Row Styling
+        .mat-header-row {
+          background-color: #f3f4f6;
+        }
+  
+        .mat-header-cell {
+          font-size: 16px;
+          font-weight: bold;
+          color: #003973;
+          padding: 12px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+          white-space: nowrap; // Prevents text wrapping
+          overflow: hidden;
+          text-overflow: ellipsis; // Adds ellipsis for overflowing content
+        }
+  
+        // Data Row Styling
+        .mat-row {
+          transition: background-color 0.2s ease;
+          &:hover {
+            background-color: #f0f8ff; // Highlight on hover
+          }
+        }
+  
+        .mat-cell {
+          font-size: 14px;
+          color: #4a4a4a;
+          padding: 10px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+          overflow: hidden;
+          text-overflow: ellipsis; // Adds ellipsis for overflowing content
+          white-space: nowrap; // Prevents text wrapping
+  
+          &.bold-cell {
+            font-weight: bold;
+          }
+        }
+  
+        // Specific column adjustments
+        .mat-header-cell:last-child,
+        .mat-cell:last-child {
+          min-width: 150px; // Ensures enough space for the Action column
+          text-align: center;
+        }
+      }
+    }
+  
+    // Button Styling in the Action Column
+    button.mat-raised-button {
+      font-size: 13px;
+      font-weight: bold;
+      text-transform: uppercase;
+      background-color: #007bff;
+      color: #ffffff;
+  
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  
+    // Menu Item Styling
+    mat-menu {
+      .mat-menu-item {
+        font-size: 14px;
+        padding: 8px 16px;
+        color: #333;
+  
+        &:hover {
+          background-color: #f0f8ff;
+          color: #003973;
+        }
+      }
+    }
+  
+    // Responsive Design
+    @media (max-width: 768px) {
+      .mat-elevation-z8 {
+        font-size: 12px;
+  
+        .mat-header-cell,
+        .mat-cell {
+          padding: 8px;
+        }
+  
+        .mat-header-cell:last-child,
+        .mat-cell:last-child {
+          min-width: 120px; // Slightly reduce space for smaller screens
+        }
+      }
+    }
+  }
+  

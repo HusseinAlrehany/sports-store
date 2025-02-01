@@ -1,0 +1,96 @@
+<div class="product-list">
+    <mat-card class="product-card" >
+     <div class="product-image">
+       
+          <img [src]="processImg" alt="product-image">
+          <!--add click event to the zoom icon-->
+          <mat-icon class="clickable-icon" (click)="openImageModel()">zoom_in</mat-icon>
+       
+     </div>
+     <div class="product-details">
+          <h2 class="product-name">{{productDetails.name}}</h2>
+          <p class="product-description">{{productDetails.description}}</p>
+ 
+          <mat-divider></mat-divider>
+          <div class="product-info">
+             <div class="info-row">
+                 <span class="info-label">Price:</span>
+                 <span class="info-value">{{productDetails.price}}</span>
+             </div>
+ 
+             <div class="info-row">
+                 <span class="info-label">Category:</span>
+                 <span class="info-value">{{productDetails.categoryName}}</span>
+             </div>
+ 
+             <mat-divider></mat-divider>
+
+             <!--Rating Section-->
+             <div class="rating-section">
+                <div class="stars">
+                  <!-- Display filled and empty stars based on the average rating -->
+                  <mat-icon *ngFor="let star of [1, 2, 3, 4, 5]"  
+                                    class="star-icon"
+                                     (click)="scrollToReviews()">
+                    {{ star <= (averageRating || 0) 
+                                             ? 'star' 
+                                             : (star - 0.5 <= (averageRating || 0) 
+                                             ? 'star_half' : 'star_border') }}
+                  </mat-icon>
+                </div>
+                <div class="rating-info">
+                  <span class="average-rating">{{ (averageRating  || 0 ).toFixed(1) }}</span>
+                  <span class="total-ratings">({{ totalRatings || 0  }} ratings)</span>
+                </div>
+              </div>
+
+             <!--add to cart button--> 
+             <div class="actions">
+                <button mat-raised-button color="primary" class="update-button"
+                  (click)="addToCart()">
+                    Add to cart
+                </button>
+             </div>
+          </div>
+     </div> 
+ 
+    </mat-card>
+ </div>
+
+
+<!-- Reviews Section -->
+<div #reviewsSection class="reviews-container">
+  <h2>Customer Reviews</h2>
+  <div class="reviews-grid">
+    <mat-card *ngFor="let review of reviews" class="review-card">
+      <mat-card-content>
+        <p class="review-user">Reviewed by: <strong>{{ review.userName }}</strong></p>
+        <div class="review-stars">
+          <mat-icon *ngFor="let star of [1, 2, 3, 4, 5]">
+            {{ star <= review.rating ? 'star' : 'star_border' }}
+          </mat-icon>
+        </div>
+        <p class="review-description">{{ review.description }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+ 
+ 
+
+<!-- Frequently Asked Questions Section -->
+<div class="faq-container">
+  <h2>Frequently Asked Questions?</h2>
+  <div class="faq-list">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let faq of faqs">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ faq.question }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="faq-answer">{{ faq.answer }}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
