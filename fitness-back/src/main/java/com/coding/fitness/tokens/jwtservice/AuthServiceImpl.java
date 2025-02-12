@@ -20,8 +20,6 @@ public class AuthServiceImpl implements AuthService{
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
 
     @Autowired
     private Mapper mapper;
@@ -51,15 +49,6 @@ public class AuthServiceImpl implements AuthService{
 
         User dbUser = userRepository.save(user);
 
-
-        Order order = new Order();
-        order.setAmount(0L);
-        order.setTotalAmount(0L);
-        order.setDiscount(0L);
-        order.setUser(dbUser);
-        order.setOrderStatus(OrderStatus.PENDING);
-
-        orderRepository.save(order);
         return mapper.getUserDTO(dbUser);
     }
 

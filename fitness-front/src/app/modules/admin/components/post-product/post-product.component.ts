@@ -88,11 +88,7 @@ export class PostProductComponent implements OnInit{
     }
     else {
       this.productForm.markAllAsTouched();
-        //OR
-      /*for(const i in this.productForm.controls){
-        this.productForm.controls[i].markAsDirty();
-        this.productForm.controls[i].updateValueAndValidity();
-      }*/
+        
     }
 
   }

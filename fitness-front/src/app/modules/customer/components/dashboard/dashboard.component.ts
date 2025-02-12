@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { CustomerService } from '../../services/customer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +20,8 @@ searchForm: FormGroup;
 
   constructor(private customerService: CustomerService,
               private snackBar: MatSnackBar,
-              private formBuilder: FormBuilder
+              private formBuilder: FormBuilder,
+              private router: Router
   ){
 
    this.searchForm = this.formBuilder.group({
@@ -61,6 +62,7 @@ searchForm: FormGroup;
       this.customerService.addToCart(id).subscribe(
         (response) => {
             this.snackBar.open("Product added to the cart successfully", "Close", {duration: 5000})
+            this.router.navigateByUrl('/customer/cart');
         })
   }
 

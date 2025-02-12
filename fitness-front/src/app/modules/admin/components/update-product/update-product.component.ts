@@ -32,10 +32,20 @@ export class UpdateProductComponent {
     ){}
     
     onFileSelected(event: any){
-       this.selectedFile = event.target.files[0];
-       this.previewImage();
-       this.imgChanged = true;
-       this.existingImage = null;
+       //this.selectedFile = event.target.files[0];
+       const file = event.target.files[0];
+       if(file){
+        this.selectedFile = file;
+        this.previewImage();
+        this.imgChanged = true;
+        this.existingImage = null;
+       }
+       else {
+        this.selectedFile = null;
+        this.imgChanged = false;
+        this.imagePreview = this.existingImage;
+       }
+       
     }
     previewImage() {
       
@@ -84,7 +94,7 @@ export class UpdateProductComponent {
         const formData: FormData = new FormData();
 
         if(this.imgChanged && this.selectedFile){
-          formData.append('image', this.selectedFile);
+          formData.append('img', this.selectedFile);
         }
         
         formData.append('categoryId', this.productForm.get('categoryId').value);

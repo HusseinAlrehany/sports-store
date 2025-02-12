@@ -31,10 +31,19 @@ export class UserProfileComponent {
 
 
   onFileSelected(event: any){
-    this.selectedFile = event.target.files[0];
-    this.previewImage();
-    this.imgChanged = true;
-    this.existingImage = null;
+    //this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    if(file){
+      this.selectedFile = file;
+      this.previewImage();
+      this.imgChanged = true;
+      this.existingImage = null;
+    } else {
+      this.selectedFile = null;
+      this.imgChanged = false;
+      this.imagePreview = this.existingImage ;
+    }
+  
  }
  previewImage() {
    
@@ -55,6 +64,7 @@ export class UserProfileComponent {
      });
 
      this.getUserById();
+
   }
 
   getUserById(){
@@ -72,8 +82,7 @@ export class UserProfileComponent {
 
       if(this.imgChanged && this.selectedFile){
         formData.append('image', this.selectedFile);
-      }
-
+      } 
       formData.append('name', this.userProfileForm.get('name').value);
       formData.append('email', this.userProfileForm.get('email').value);
       formData.append('password', this.userProfileForm.get('password').value);
@@ -81,11 +90,10 @@ export class UserProfileComponent {
       this.customerService.updateUserProfile(formData).subscribe(
         (res)=> {
           if(res.id != null){
-           const user = {
-               id: res.id,
-               role: res.userRole
+            const user = {
+              id: res.id,
+              role: res.userRole
             }
-
             StorageService.saveUser(user);
             StorageService.saveToken(res.updatedToken);
             this.snackBar.open("Profile Updated Successfully", "Close", {duration: 5000});

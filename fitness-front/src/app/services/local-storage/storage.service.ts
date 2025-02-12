@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 const TOKEN = 'token';
 const USER = 'user';
@@ -7,8 +8,6 @@ const USER = 'user';
   providedIn: 'root'
 })
 export class StorageService {
-
-  constructor() { }
 
   static isLocalStorageAvailable(): boolean {
     return (
@@ -28,6 +27,7 @@ export class StorageService {
     if(this.isLocalStorageAvailable()){
       localStorage.removeItem(USER);
       localStorage.setItem(USER, JSON.stringify(user));
+      
     }
   }
   static getToken(): string | null{

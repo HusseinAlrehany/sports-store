@@ -57,7 +57,7 @@ public class CartServiceImpl implements CartService{
              return ResponseEntity.status(HttpStatus.CREATED)
                      .body(cartItemRepository.save(cartItems));
         }
-            //otherwise, create a new cart Item
+            //if not, create a new cart Item
             CartItems newCartItem = new CartItems();
             newCartItem.setProduct(product);
             newCartItem.setUser(user);

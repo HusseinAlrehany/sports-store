@@ -1,4 +1,5 @@
 package com.coding.fitness.controller.customer;
+import com.coding.fitness.dtos.AuthenticationResponse;
 import com.coding.fitness.dtos.UserDTO;
 import com.coding.fitness.services.customer.UserProfileService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ public class UserProfileController {
 
   @PutMapping("/edit-profile/{userId}")
   public ResponseEntity<UserDTO> updateUserProfile (@PathVariable Long userId,
-                                                    @ModelAttribute UserDTO userDTO){
+                                                                   @ModelAttribute UserDTO userDTO){
 
       UserDTO userDTO1 = userProfileService.updateUserProfile(userId, userDTO);
       return userDTO1 != null ? ResponseEntity.ok(userDTO1) :

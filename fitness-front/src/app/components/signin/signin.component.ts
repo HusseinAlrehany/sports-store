@@ -20,7 +20,6 @@ export class SigninComponent {
 
   hidePassword = true;
 
-  //user: User;
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
@@ -28,8 +27,6 @@ export class SigninComponent {
               private router: Router
 
   ){
-
-    //this.user = new User('', '');
 
     //the sign in form must have the exact variable names as 
     //in the SigninRequest class of the backend(which send as a param in signin end point)
@@ -42,9 +39,6 @@ export class SigninComponent {
 
   onSubmit(){
     console.log(this.signinForm.value);
-   
-    //this.user.email = this.signinForm.get('email')?.value;
-    //this.user.password = this.signinForm.get('password')?.value;
 
     this.authService.signin(this.signinForm.value).subscribe(
       (response)=> {

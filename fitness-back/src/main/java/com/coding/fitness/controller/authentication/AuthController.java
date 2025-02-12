@@ -9,9 +9,7 @@ import com.coding.fitness.repository.UserRepository;
 import com.coding.fitness.tokens.jwtservice.AppUserDetailsService;
 import com.coding.fitness.tokens.jwtservice.AuthService;
 import com.coding.fitness.tokens.utils.JwtUtils;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import io.jsonwebtoken.io.IOException;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Optional;
 
 @RestController
@@ -57,7 +54,8 @@ public class AuthController {
 
 
     @PostMapping("/signin")
-    public AuthenticationResponse signIn(@RequestBody SigninRequest signinRequest)  {
+    public AuthenticationResponse signIn(@RequestBody SigninRequest signinRequest) {
+
          try{
               authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                       signinRequest.getEmail(),
@@ -74,7 +72,7 @@ public class AuthController {
 
          Optional<User> optionalUser = userRepository.findFirstByEmail(signinRequest.getEmail());
          final String jwtToken = jwtUtils.generateToken(userDetails);
-          AuthenticationResponse response = new AuthenticationResponse();
+        AuthenticationResponse response = new AuthenticationResponse();
           if(optionalUser.isPresent()){
              response.setJwtToken(jwtToken);
               response.setUserId(optionalUser.get().getId());
@@ -82,7 +80,7 @@ public class AuthController {
 
 
           }
-          return  response;
+          return response;
     }
 
 

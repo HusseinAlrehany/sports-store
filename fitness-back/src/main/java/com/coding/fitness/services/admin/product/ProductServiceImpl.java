@@ -104,20 +104,21 @@ public class ProductServiceImpl implements ProductService{
                 .orElseThrow(()-> new ValidationException("No Product Found"));
         Category category = categoryRepository.findById(productDTO.getCategoryId())
                 .orElseThrow(()-> new ValidationException("No category found"));
-        Optional.ofNullable(productDTO.getImg())
-                 .filter(img-> !img.isEmpty())
-                 .orElseThrow(()-> new ValidationException("No Img Found"));
 
         product.setId(productId);
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
         product.setDescription(productDTO.getDescription());
-        try{
-            product.setImg(productDTO.getImg().getBytes());
 
-        }catch(IOException ex){
-            throw new ProcessingImgException("Error Processing The Img");
+        if(productDTO.getImg() != null){
+            try{
+                product.setImg(productDTO.getImg().getBytes());
+
+            }catch(IOException ex){
+                throw new ProcessingImgException("Error Processing The Img");
+            }
         }
+
         product.setCategory(category);
         Product dbProduct = productRepository.save(product);
         return mapper.getProductDTO(dbProduct);

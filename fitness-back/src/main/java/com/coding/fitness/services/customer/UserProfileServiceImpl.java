@@ -1,5 +1,4 @@
 package com.coding.fitness.services.customer;
-
 import com.coding.fitness.dtos.UserDTO;
 import com.coding.fitness.entity.User;
 import com.coding.fitness.exceptions.ProcessingImgException;
@@ -17,6 +16,7 @@ import java.util.Optional;
 public class UserProfileServiceImpl implements UserProfileService{
 
     private final UserRepository userRepository;
+
     private final Mapper mapper;
 
 
@@ -38,12 +38,17 @@ public class UserProfileServiceImpl implements UserProfileService{
         user.setName(userDTO.getName());
         user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
 
-        try {
-             user.setImg(userDTO.getImage().getBytes());
-        }
-        catch(IOException ex){
-            throw new ProcessingImgException("Error processing Img");
-        }
+         if(userDTO.getImage() != null){
+
+             try {
+                 user.setImg(userDTO.getImage().getBytes());
+             }
+             catch(IOException ex){
+                 throw new ProcessingImgException("Error processing Img");
+             }
+
+         }
+
 
         return mapper.getUserDTO(userRepository.save(user));
     }
