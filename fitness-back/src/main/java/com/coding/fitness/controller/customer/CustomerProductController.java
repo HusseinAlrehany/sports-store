@@ -1,7 +1,7 @@
 package com.coding.fitness.controller.customer;
 
 import com.coding.fitness.dtos.ProductDTO;
-import com.coding.fitness.services.customer.CustomerProductService;
+import com.coding.fitness.services.customer.product.CustomerProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

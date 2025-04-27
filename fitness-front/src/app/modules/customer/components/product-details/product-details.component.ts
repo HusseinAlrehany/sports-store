@@ -75,7 +75,7 @@ export class ProductDetailsComponent {
         this.reviews = res.reviews || [];
         this.faqs = res.faqdtos || [];
 
-        this.reviews.forEach(element =>{
+          /*this.reviews.forEach(element =>{
           this.rating = element.rating;
           this.description = element.description;
           this.userName = element.userName;
@@ -87,13 +87,13 @@ export class ProductDetailsComponent {
         });
 
         //Frequently Asked Question
-        this.faqs.forEach(element => {
+          this.faqs.forEach(element => {
           this.question = element.question;
           this.answer = element.answer;
 
           console.log("question " + this.question);
           console.log("answer " + this.answer);
-        })
+        });*/
        
       },
       (error)=> {

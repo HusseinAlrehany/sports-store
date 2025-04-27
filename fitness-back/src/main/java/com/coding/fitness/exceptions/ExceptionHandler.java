@@ -4,6 +4,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -30,6 +31,16 @@ public class ExceptionHandler {
     public ResponseEntity<Object> errorProcessingImgExceptionHandler(ValidationException ex){
         return new ResponseEntity<Object>(new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage(), LocalDateTime.now()), HttpStatus.NOT_FOUND);
 
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex){
+
+        return new ResponseEntity<>(new ErrorResponse(
+                HttpStatus.FORBIDDEN,
+                "Not Authorized User",
+                LocalDateTime.now()),
+                HttpStatus.FORBIDDEN);
     }
 
 }

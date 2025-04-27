@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CategoryService {
 
-    Category createCategory(CategoryDTO categoryDTO);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
 
-    List<Category> findAll();
+    List<CategoryDTO> findAll();
 }

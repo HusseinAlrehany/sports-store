@@ -37,8 +37,6 @@ public class OrderDTO {
 
     private String userName;
 
-    //to prevent serializing the cartItems into JSON when the OrderDTO is serialized
-    @JsonBackReference
     private List<CartItemsDTO> cartItems = new ArrayList<>();
 
 }

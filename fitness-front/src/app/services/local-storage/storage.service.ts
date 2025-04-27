@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
 const TOKEN = 'token';
 const USER = 'user';
 
 @Injectable({
+
   providedIn: 'root'
 })
 export class StorageService {

@@ -1,6 +1,4 @@
 package com.coding.fitness.tokens.config;
-
-import com.coding.fitness.enums.UserRole;
 import com.coding.fitness.tokens.filters.JwtRequestFilter;
 import com.coding.fitness.tokens.jwtservice.AppUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -22,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity //for activating @PreAuthorize("hasAuthority('ROLE')")
 public class WebSecurityConfiguration {
 
     @Autowired

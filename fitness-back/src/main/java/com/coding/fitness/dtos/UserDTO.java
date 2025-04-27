@@ -18,9 +18,4 @@ public class UserDTO {
     private String email;
 
     private String password;
-    private UserRole userRole;
-    private MultipartFile image;
-    private byte[] byteImg;
-    private String updatedToken;
-
 }

@@ -7,7 +7,7 @@ import com.coding.fitness.entity.Coupon;
 import java.util.List;
 
 public interface CouponService {
-    Coupon createCoupon(CouponDTO couponDTO);
+    CouponDTO createCoupon(CouponDTO couponDTO);
 
     List<CouponDTO> findAll();
 

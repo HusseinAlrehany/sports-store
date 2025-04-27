@@ -1,4 +1,4 @@
-package com.coding.fitness.services.customer;
+package com.coding.fitness.services.customer.product;
 
 import com.coding.fitness.dtos.ProductDTO;
 

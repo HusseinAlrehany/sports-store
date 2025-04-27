@@ -1,19 +1,16 @@
 package com.coding.fitness.services.admin.orders;
 import com.coding.fitness.dtos.AnalyticsResponse;
 import com.coding.fitness.dtos.OrderDTO;
-import com.coding.fitness.entity.Coupon;
 import com.coding.fitness.entity.Order;
 import com.coding.fitness.enums.OrderStatus;
 import com.coding.fitness.exceptions.ValidationException;
-import com.coding.fitness.mapper.Mapper;
+import com.coding.fitness.mapper.OrderMapper;
 import com.coding.fitness.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,38 +18,39 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
     private final OrderRepository orderRepository;
 
-    private final Mapper mapper;
+    //private final Mapper mapper;
+
+    private final OrderMapper orderMapper;
     @Override
     public List<OrderDTO> findAllOrders() {
-       List<Order> orders = Optional.of(orderRepository.findAllByOrderStatusIn(List.of(OrderStatus.PLACED, OrderStatus.DELIVERED, OrderStatus.SHIPPED)))
-               .filter(ord-> !ord.isEmpty())
-               .orElseThrow(()-> new ValidationException("No Orders Found"));
-        return orders.stream()
-                .map(mapper::getOrderDTO)
-                .collect(Collectors.toList());
+       List<Order> orders = orderRepository.
+                            findAllByOrderStatusIn(List.of(OrderStatus.PLACED,
+                                                           OrderStatus.DELIVERED,
+                                                           OrderStatus.SHIPPED));
+       if(orders.isEmpty()){
+           throw new ValidationException("No Orders Found");
+       }
+
+        return orderMapper.toDTOList(orders);
     }
 
     @Override
     public OrderDTO updateOrder(OrderDTO orderDTO) {
-        Optional.ofNullable(orderDTO.getId())
-                .filter(id-> id > 0)
-                .orElseThrow(()-> new ValidationException("Invalid OrderId"));
-      Optional <Order> order =  Optional.of(orderRepository.findById(orderDTO.getId()))
-                .filter(Optional::isPresent)
-                .orElseThrow(()-> new ValidationException("No Order Found"));
-     Optional.of(order.get())
-             .filter(ord-> !isOrderUpdateExpired(ord))
-             .orElseThrow(()-> new ValidationException("Can not update Order, Max Period for update is 24h"));
+        if(orderDTO.getId() < 0){
+            throw new ValidationException("Invalid OrderId");
+        }
+      Order order =  orderRepository.findById(orderDTO.getId()).
+              orElseThrow(()-> new ValidationException("No Order Found"));
 
-         order.get().setOrderStatus(OrderStatus.PLACED);
-         order.get().setOrderDescription(orderDTO.getOrderDescription());
-         order.get().setDate(new Date());
-         order.get().setTrackingId(UUID.randomUUID());
-         order.get().setAddress(orderDTO.getAddress());
+        if(!isOrderUpdateExpired(order)){
+            throw new ValidationException("Can not update Order, Max Period for update is 24h");
+        }
 
-        Order orderDB = orderRepository.save(order.get());
+         orderMapper.updateOrder(order, orderDTO);
 
-        return mapper.getOrderDTO(orderDB);
+        Order orderDB = orderRepository.save(order);
+
+        return orderMapper.toDTO(orderDB);
     }
 
     @Override
@@ -65,11 +63,10 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
     @Override
     public void deleteOrder(Long orderId) {
-        Optional.ofNullable(orderId)
-                .filter(id -> id > 0)
-                .orElseThrow(()-> new ValidationException("Invalid Id"));
-        Optional.of(orderRepository.findById(orderId))
-                .filter(ord-> ord.isPresent())
+        if(orderId < 0){
+            throw new ValidationException("Invalid Id");
+        }
+        orderRepository.findById(orderId)
                 .orElseThrow(()-> new ValidationException("No Order Found"));
 
          orderRepository.deleteById(orderId);
@@ -77,30 +74,23 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
     @Override
     public OrderDTO changeOrderStatus(Long orderId, String orderStatus) {
-        Optional.ofNullable(orderId)
-                .filter(id-> id > 0)
-                .orElseThrow(()-> new ValidationException("Invalid order id"));
+        if(orderId < 0){
+            throw new ValidationException("Invalid order id");
+        }
 
-        String trimmedStatus = Optional.ofNullable(orderStatus)
-                .map(String::trim)
-                .filter(status -> !status.isEmpty())
-                .orElseThrow(() -> new ValidationException("Invalid order status"));
+        //Validating the incoming orderStatus if it passed the order status will be updated
+         OrderStatus status = OrderStatus.fromStringToOrderStatus(orderStatus);
 
           Order order   = orderRepository.findById(orderId)
                   .orElseThrow(()-> new ValidationException("No Order Found"));
 
-           Map<String, Consumer<Order>> statusActions = Map.of(
-                "Shipped", ord-> ord.setOrderStatus(OrderStatus.SHIPPED),
-                "Delivered", ord-> ord.setOrderStatus(OrderStatus.DELIVERED));
+          //update order status
+          order.setOrderStatus(status);
+          //if else if here one condition will be executed and the other is skipped
+         //but if if both are evaluated but the last one if it is true it will override the first and will be executed
 
-          Optional.ofNullable(statusActions.get(trimmedStatus))
-                  .ifPresentOrElse(
-                          action-> action.accept(order),
-                          ()-> {throw new ValidationException("Invalid order status Too");}
-                  );
-
-        Order dbOrder = orderRepository.save(order);
-        return mapper.getOrderDTO(dbOrder);
+          Order dbOrder = orderRepository.save(order);
+         return orderMapper.toDTO(dbOrder);
     }
 
     @Override

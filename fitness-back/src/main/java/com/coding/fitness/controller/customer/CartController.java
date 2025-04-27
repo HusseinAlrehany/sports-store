@@ -3,6 +3,7 @@ package com.coding.fitness.controller.customer;
 import com.coding.fitness.dtos.*;
 import com.coding.fitness.exceptions.ValidationException;
 import com.coding.fitness.services.customer.cart.CartService;
+import com.coding.fitness.services.customer.customerorders.CustomerOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class CartController {
 
     private final CartService cartService;
+
+    private final CustomerOrderService customerOrderService;
 
     @PostMapping("/cart")
     public ResponseEntity<Map<String,String>> addProductToCart(@RequestBody AddProductInCartDTO addProductInCartDTO){
@@ -41,7 +44,7 @@ public class CartController {
     @PostMapping("/placeOrder")
     public ResponseEntity<OrderDTO>placeOrder(@RequestBody PlaceOrderDTO orderDTO){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(cartService.placeOrder(orderDTO));
+                .body(customerOrderService.placeOrder(orderDTO));
     }
     @DeleteMapping("/cart/{userId}")
     public ResponseEntity<Void> clearCart(@PathVariable Long userId){
@@ -56,7 +59,7 @@ public class CartController {
     @GetMapping("/order-summary/{userId}")
     public ResponseEntity<OrderSummary> getOrderSummary(@PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK)
-                .body(cartService.getOrderSummary(userId));
+                .body(customerOrderService.getOrderSummary(userId));
     }
 
     @PostMapping("/increase-quantity")
@@ -74,13 +77,13 @@ public class CartController {
     @GetMapping("/coupon/{userId}/{code}")
     public ResponseEntity<OrderSummary> applyCoupon(@PathVariable Long userId, @PathVariable String code){
 
-        return ResponseEntity.ok(cartService.applyCoupon(userId, code));
+        return ResponseEntity.ok(customerOrderService.applyCoupon(userId, code));
     }
 
     @GetMapping("/myOrders/{userId}")
     public ResponseEntity<List<OrderDTO>> getAllMyPlacedOrders(@PathVariable Long userId){
 
-        return ResponseEntity.ok(cartService.findAllMyPlacedOrders(userId));
+        return ResponseEntity.ok(customerOrderService.findAllMyPlacedOrders(userId));
     }
 
 }

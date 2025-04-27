@@ -2,12 +2,9 @@ package com.coding.fitness.tokens.jwtservice;
 
 import com.coding.fitness.dtos.SignUpRequest;
 import com.coding.fitness.dtos.UserDTO;
-import com.coding.fitness.entity.Order;
 import com.coding.fitness.entity.User;
-import com.coding.fitness.enums.OrderStatus;
 import com.coding.fitness.enums.UserRole;
-import com.coding.fitness.mapper.Mapper;
-import com.coding.fitness.repository.OrderRepository;
+import com.coding.fitness.mapper.UserMapper;
 import com.coding.fitness.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +19,7 @@ public class AuthServiceImpl implements AuthService{
 
 
     @Autowired
-    private Mapper mapper;
+    private UserMapper userMapper;
 
     //to create admin account
     @PostConstruct
@@ -49,7 +46,7 @@ public class AuthServiceImpl implements AuthService{
 
         User dbUser = userRepository.save(user);
 
-        return mapper.getUserDTO(dbUser);
+        return userMapper.toDTO(dbUser);
     }
 
     @Override

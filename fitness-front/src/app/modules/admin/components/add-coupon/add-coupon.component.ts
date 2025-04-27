@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../../../Material.Module';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -31,6 +31,7 @@ export class AddCouponComponent {
       expirationDate: [null, [Validators.required]]
     })
   }
+
 
   addCoupon() {
     if(this.couponForm.valid){

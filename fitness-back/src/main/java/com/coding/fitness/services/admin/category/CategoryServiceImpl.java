@@ -2,6 +2,8 @@ package com.coding.fitness.services.admin.category;
 
 import com.coding.fitness.dtos.CategoryDTO;
 import com.coding.fitness.entity.Category;
+import com.coding.fitness.exceptions.ValidationException;
+import com.coding.fitness.mapper.CategoryMapper;
 import com.coding.fitness.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +17,23 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    @Override
-    public Category createCategory(CategoryDTO categoryDTO) {
-        Category category = new Category();
-        category.setName(categoryDTO.getName());
-        category.setDescription(categoryDTO.getDescription());
+    private final CategoryMapper categoryMapper;
 
-        return categoryRepository.save(category);
+    @Override
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+
+          Category category = categoryMapper.toEntity(categoryDTO);
+
+        return categoryMapper.toDTO(categoryRepository.save(category));
     }
 
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> findAll() {
+        List<Category> categories = categoryRepository.findAll();
+        if(categories.isEmpty()){
+            throw new ValidationException("No Categories Found");
+        }
+
+        return categoryMapper.toDTOList(categories);
     }
 }

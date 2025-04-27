@@ -6,7 +6,7 @@ import com.coding.fitness.dtos.ReviewDTO;
 import com.coding.fitness.entity.*;
 import com.coding.fitness.exceptions.ProcessingImgException;
 import com.coding.fitness.exceptions.ValidationException;
-import com.coding.fitness.mapper.Mapper;
+import com.coding.fitness.mapper.ReviewMapper;
 import com.coding.fitness.repository.OrderRepository;
 import com.coding.fitness.repository.ProductRepository;
 import com.coding.fitness.repository.ReviewRepository;
@@ -17,11 +17,10 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ProductDetailsReviewServiceImpl implements ProductDetailsReviewService {
+public class ProductReviewServiceImpl implements ProductReviewService {
 
     private final OrderRepository orderRepository;
 
@@ -31,13 +30,13 @@ public class ProductDetailsReviewServiceImpl implements ProductDetailsReviewServ
 
     private final ReviewRepository reviewRepository;
 
-    private final Mapper mapper;
+    private final ReviewMapper reviewMapper;
 
 
-    public OrderedProductsDTO getProductDetailsAndReviewByOrderId(Long orderId){
-        Optional.ofNullable(orderId)
-                .filter(id-> id > 0)
-                .orElseThrow(()-> new ValidationException("Invalid OrderID"));
+    public OrderedProductsDTO reviewOrderedProduct(Long orderId){
+        if(orderId < 0){
+            throw new ValidationException("Invalid OrderID");
+        }
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(()-> new ValidationException("No Order Found"));
 
@@ -87,7 +86,7 @@ public class ProductDetailsReviewServiceImpl implements ProductDetailsReviewServ
         productRepository.save(product);
 
         Review savedReview = reviewRepository.save(review);
-       return mapper.getReviewDTO(savedReview);
+       return reviewMapper.toDTO(savedReview);
     }
 
     private Double calculateAverageRating(List<Review> reviews) {

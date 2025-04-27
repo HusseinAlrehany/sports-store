@@ -4,14 +4,11 @@ import com.coding.fitness.dtos.FAQDTO;
 import com.coding.fitness.entity.FAQ;
 import com.coding.fitness.entity.Product;
 import com.coding.fitness.exceptions.ValidationException;
-import com.coding.fitness.mapper.Mapper;
+import com.coding.fitness.mapper.FAQMapper;
 import com.coding.fitness.repository.FAQRepository;
 import com.coding.fitness.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,26 +16,25 @@ public class FAQServiceImpl implements FAQService{
 
     private final FAQRepository faqRepository;
     private final ProductRepository productRepository;
-    private final Mapper mapper;
+    private final FAQMapper faqMapper;
 
     public FAQDTO createFAQ(Long productId, FAQDTO faqdto){
-        Optional.ofNullable(productId)
-                .filter(id-> id > 0)
-                .orElseThrow(()-> new ValidationException("Invalid product id"));
 
-        Optional.ofNullable(faqdto)
-                .filter(faq-> !faq.getAnswer().isBlank() && !faq.getQuestion().isBlank())
-                .orElseThrow(()-> new ValidationException("Invalid question or answer"));
+        if(productId < 0){
+            throw new ValidationException("Invalid product id");
+        }
 
-        Product product = productRepository.findById(productId)
+        if(faqdto.getQuestion().isBlank() || faqdto.getAnswer().isBlank()){
+            throw new ValidationException("Invalid question or answer");
+        }
+         Product product = productRepository.findById(productId)
                 .orElseThrow(()-> new ValidationException("No Product Found"));
 
-        FAQ faq = new FAQ();
-        faq.setQuestion(faqdto.getQuestion());
-        faq.setAnswer(faqdto.getAnswer());
-        faq.setProduct(product);
+        FAQ faq = faqMapper.toEntity(faqdto);
 
-         return mapper.getFAQDTO(faqRepository.save(faq));
+         faq.setProduct(product);
+
+         return faqMapper.toDTO(faqRepository.save(faq));
 
 
     }

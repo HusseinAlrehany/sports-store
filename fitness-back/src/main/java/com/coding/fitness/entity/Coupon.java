@@ -1,14 +1,8 @@
 package com.coding.fitness.entity;
 
-import com.coding.fitness.dtos.CouponDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "coupons")

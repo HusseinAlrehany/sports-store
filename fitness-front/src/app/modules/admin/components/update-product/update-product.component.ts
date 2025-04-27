@@ -17,7 +17,7 @@ export class UpdateProductComponent {
 
   productId: number = this.activatedRoute.snapshot.params["productId"];
 
-  productForm: FormGroup;
+    productForm: FormGroup;
     listOfCategories: any = [];
     selectedFile: File | null;
     imagePreview: string | ArrayBuffer | null;

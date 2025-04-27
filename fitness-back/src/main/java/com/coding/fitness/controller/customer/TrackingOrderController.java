@@ -2,6 +2,7 @@ package com.coding.fitness.controller.customer;
 
 import com.coding.fitness.dtos.OrderDTO;
 import com.coding.fitness.services.customer.cart.CartService;
+import com.coding.fitness.services.customer.customerorders.CustomerOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +15,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TrackingOrderController {
 
-    private final CartService cartService;
+    private final CustomerOrderService customerOrderService;
 
     @GetMapping("/orders/{trackingId}")
     public ResponseEntity<OrderDTO> searchOrderByTrackingId(@PathVariable UUID trackingId){
-       OrderDTO orderDTO = cartService.searchOrderByTrackingId(trackingId);
+       OrderDTO orderDTO = customerOrderService.searchOrderByTrackingId(trackingId);
 
        return orderDTO == null ? ResponseEntity.notFound().build() :
                ResponseEntity.ok(orderDTO);
